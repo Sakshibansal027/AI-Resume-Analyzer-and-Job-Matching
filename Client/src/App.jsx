@@ -8,6 +8,7 @@ import Jobs from "./pages/Jobs";
 import Analysis from "./pages/Analysis";
 import SavedJobs from "./pages/SavedJobs";
 import PostJob from "./pages/PostJob";
+import RecruiterDashboard from "./pages/RecruiterDashboard";
 function App() {
   return (
     <BrowserRouter>
@@ -67,6 +68,13 @@ function App() {
             </ProtectedRoute>
           }
         />
+      <Route path="/recruiter-dashboard"
+  element={
+    <ProtectedRoute>
+      <RecruiterDashboard />
+    </ProtectedRoute>
+  }
+/>
       </Routes>
     </BrowserRouter>
   );

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import API from "../services/api";
 import { useNavigate } from "react-router-dom";
 
 import {
@@ -14,7 +14,8 @@ import {
     Plus,
     X,
     Loader2,
-    CheckCircle2
+    CheckCircle2,
+    ArrowLeft
 } from "lucide-react";
 const PostJob = () => {
     const navigate = useNavigate();
@@ -37,7 +38,7 @@ const PostJob = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-   
+
     const handleAddSkill = (e) => {
         if (e.key === "Enter" || e.key === ",") {
             e.preventDefault();
@@ -69,13 +70,9 @@ const PostJob = () => {
                 requiredSkills,
             };
 
-            const res = await axios.post("http://localhost:3000/api/jobs", payload, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem("token")}`,
-                },
-            });
+            const res = await API.post("/jobs", payload);
 
-           
+
             setMessage({ type: "success", text: "Job posted successfully! Redirecting to dashboard..." });
 
             setFormData({
@@ -91,7 +88,7 @@ const PostJob = () => {
 
 
             setTimeout(() => {
-                navigate("/dashboard");
+                navigate("/recruiter-dashboard");
             }, 1500);
 
         } catch (error) {
@@ -108,6 +105,16 @@ const PostJob = () => {
     return (
         <div className="min-h-screen bg-slate-950 text-slate-100 py-10 px-4 sm:px-6 lg:px-8 flex items-center justify-center">
             <div className="max-w-3xl w-full bg-slate-900/80 backdrop-blur-md border border-slate-800 rounded-2xl p-6 sm:p-10 shadow-2xl">
+
+                {/* Back Button */}
+                <button
+                    type="button"
+                    onClick={() => navigate(-1)}
+                    className="inline-flex items-center gap-2 mb-6 px-3.5 py-2 rounded-xl bg-slate-950 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 text-slate-300 hover:text-white text-sm font-medium transition-all cursor-pointer"
+                >
+                    <ArrowLeft className="w-4 h-4" />
+                    <span>Back</span>
+                </button>
 
                 {/* Header */}
                 <div className="mb-8 text-center">

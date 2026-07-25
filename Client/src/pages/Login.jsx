@@ -11,25 +11,25 @@ function Login() {
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
- const handleLogin = async (e) => {
-  e.preventDefault();
-  try {
-    const res = await API.post("/auth/login", { email, password });
-    
-    // Save Token and User Info in LocalStorage
-    localStorage.setItem("token", res.data.token);
-    localStorage.setItem("user", JSON.stringify(res.data.user)); // Make sure user object with role is saved
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await API.post("/auth/login", { email, password });
 
-    // Redirect based on role
-    if (res.data.user.role === "recruiter") {
-      navigate("/add-job"); // Recruiter direct Job Post page par jaye
-    } else {
-      navigate("/dashboard"); // Candidate candidate dashboard par jaye
+      // Save Token and User Info in LocalStorage
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("user", JSON.stringify(res.data.user)); // Make sure user object with role is saved
+
+      // Redirect based on role
+      if (res.data.user.role === "recruiter") {
+        navigate("/recruiter-dashboard");
+      } else {
+        navigate("/dashboard");
+      }
+    } catch (err) {
+      setErrorMsg(err.response?.data?.message || "Login failed");
     }
-  } catch (err) {
-    setErrorMsg(err.response?.data?.message || "Login failed");
-  }
-};
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-950 relative overflow-hidden px-4 font-sans">
@@ -39,7 +39,7 @@ function Login() {
 
       {/* Login Card */}
       <div className="relative w-full max-w-md bg-slate-900/80 backdrop-blur-xl border border-slate-800 p-8 rounded-3xl shadow-2xl shadow-indigo-950/50">
-        
+
         {/* Header */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center p-3 bg-indigo-500/10 border border-indigo-500/20 rounded-2xl mb-4 text-indigo-400 shadow-inner">
