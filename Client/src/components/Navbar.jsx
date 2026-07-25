@@ -1,11 +1,12 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { 
-  Sparkles, 
-  UploadCloud, 
-  BarChart3, 
-  Briefcase, 
-  Bookmark, 
-  LogOut 
+import PostJob from "../pages/PostJob";
+import {
+  Sparkles,
+  UploadCloud,
+  BarChart3,
+  Briefcase,
+  Bookmark,
+  LogOut
 } from "lucide-react";
 
 function Navbar() {
@@ -17,16 +18,16 @@ function Navbar() {
     navigate("/");
   };
 
-  // Helper function to check active path for styling
+
   const isActive = (path) => location.pathname === path;
 
   return (
     <header className="sticky top-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800/80 font-sans">
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3.5">
-        
+
         {/* Brand Logo */}
-        <Link 
-          to="/dashboard" 
+        <Link
+          to="/dashboard"
           className="flex items-center gap-2 group cursor-pointer"
         >
           <div className="p-2 bg-gradient-to-tr from-indigo-600 to-purple-600 rounded-xl shadow-lg shadow-indigo-500/20 group-hover:scale-105 transition-transform">
@@ -39,14 +40,13 @@ function Navbar() {
 
         {/* Navigation Links */}
         <div className="flex items-center gap-1 md:gap-2 text-sm font-medium">
-          
+
           <Link
             to="/upload"
-            className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl transition-all ${
-              isActive("/upload")
-                ? "bg-indigo-500/15 text-indigo-400 border border-indigo-500/30"
-                : "text-slate-300 hover:text-white hover:bg-slate-900"
-            }`}
+            className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl transition-all ${isActive("/upload")
+              ? "bg-indigo-500/15 text-indigo-400 border border-indigo-500/30"
+              : "text-slate-300 hover:text-white hover:bg-slate-900"
+              }`}
           >
             <UploadCloud className="w-4 h-4" />
             <span>Upload Resume</span>
@@ -54,11 +54,10 @@ function Navbar() {
 
           <Link
             to="/analysis"
-            className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl transition-all ${
-              isActive("/analysis")
-                ? "bg-indigo-500/15 text-indigo-400 border border-indigo-500/30"
-                : "text-slate-300 hover:text-white hover:bg-slate-900"
-            }`}
+            className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl transition-all ${isActive("/analysis")
+              ? "bg-indigo-500/15 text-indigo-400 border border-indigo-500/30"
+              : "text-slate-300 hover:text-white hover:bg-slate-900"
+              }`}
           >
             <BarChart3 className="w-4 h-4" />
             <span>Analysis</span>
@@ -66,23 +65,34 @@ function Navbar() {
 
           <Link
             to="/jobs"
-            className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl transition-all ${
-              isActive("/jobs")
-                ? "bg-indigo-500/15 text-indigo-400 border border-indigo-500/30"
-                : "text-slate-300 hover:text-white hover:bg-slate-900"
-            }`}
+            className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl transition-all ${isActive("/jobs")
+              ? "bg-indigo-500/15 text-indigo-400 border border-indigo-500/30"
+              : "text-slate-300 hover:text-white hover:bg-slate-900"
+              }`}
           >
             <Briefcase className="w-4 h-4" />
             <span>Jobs</span>
           </Link>
 
           <Link
+            to="/add-job"
+            className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl transition-all ${isActive("/saved-jobs")
+              ? "bg-indigo-500/15 text-indigo-400 border border-indigo-500/30"
+              : "text-slate-300 hover:text-white hover:bg-slate-900"
+              }`}
+          >
+
+            <span>Add Job</span>
+          </Link>
+
+
+
+          <Link
             to="/saved-jobs"
-            className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl transition-all ${
-              isActive("/saved-jobs")
-                ? "bg-indigo-500/15 text-indigo-400 border border-indigo-500/30"
-                : "text-slate-300 hover:text-white hover:bg-slate-900"
-            }`}
+            className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl transition-all ${isActive("/saved-jobs")
+              ? "bg-indigo-500/15 text-indigo-400 border border-indigo-500/30"
+              : "text-slate-300 hover:text-white hover:bg-slate-900"
+              }`}
           >
             <Bookmark className="w-4 h-4" />
             <span>Saved Jobs</span>

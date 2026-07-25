@@ -1,6 +1,4 @@
 import SavedJob from "../models/savedJob.model.js";
-
-
 export const saveJob = async (req, res) => {
   try {
     const userId = req.user.userId;

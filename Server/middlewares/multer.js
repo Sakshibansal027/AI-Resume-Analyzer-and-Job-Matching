@@ -1,29 +1,28 @@
 import multer from "multer";
 
-const storage = multer.diskStorage({
-  destination: (req, file, callback) => {
-    callback(null, "uploads/");
-  },
+//  Use memory storage (no local file saving)
+const storage = multer.memoryStorage();
 
-  filename: (req, file, callback) => {
-    callback(null, `${Date.now()}-${file.originalname}`);
-  },
-});
-
-const fileFilter = (req, file, callback) => {
-  if (file.mimetype !== "application/pdf") {
-    return callback(new Error("Only PDF resume files are allowed."));
+//  Allow only PDF files
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype === "application/pdf") {
+    cb(null, true);
+  } else {
+    cb(new Error("Only PDF resume files are allowed"), false);
   }
-
-  callback(null, true);
 };
 
+// Configure multer
 const upload = multer({
   storage,
   fileFilter,
   limits: {
-    fileSize: 5 * 1024 * 1024,
+    fileSize: 5 * 1024 * 1024, // 5MB limit
   },
 });
 
+// Middleware to handle single file upload (field name: 'resume')
+export const uploadResume = upload.single("resume");
+
+// (optional) export full upload instance if needed elsewhere
 export default upload;

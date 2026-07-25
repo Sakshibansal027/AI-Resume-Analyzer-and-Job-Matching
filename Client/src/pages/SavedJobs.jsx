@@ -149,15 +149,24 @@ function SavedJobs() {
                     )}
                   </button>
 
-                  <a
-                    href={job.applyLink}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white text-xs font-semibold rounded-xl shadow-lg shadow-indigo-500/20 transition-all"
-                  >
-                    <span>Apply Now</span>
-                    <ExternalLink className="w-3.5 h-3.5" />
-                  </a>
+                  {job.applyLink ? (
+                    <a
+                      href={job.applyLink}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white text-xs font-semibold rounded-xl shadow-lg shadow-indigo-500/20 transition-all"
+                    >
+                      <span>Apply Now</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                  ) : (
+                    <span
+                      className="inline-flex items-center gap-2 px-5 py-2.5 bg-slate-800/60 border border-slate-700 text-slate-400 text-xs font-medium rounded-xl cursor-not-allowed"
+                      title="This is an internally posted job — reach out to the company directly."
+                    >
+                      Internal Posting
+                    </span>
+                  )}
                 </div>
               </article>
             ))}

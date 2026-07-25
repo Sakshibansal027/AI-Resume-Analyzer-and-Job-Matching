@@ -7,6 +7,7 @@ import UploadResume from "./pages/UploadResume";
 import Jobs from "./pages/Jobs";
 import Analysis from "./pages/Analysis";
 import SavedJobs from "./pages/SavedJobs";
+import PostJob from "./pages/PostJob";
 function App() {
   return (
     <BrowserRouter>
@@ -44,7 +45,10 @@ function App() {
         <Route
           path="/analysis"
           element={
-            <Analysis />
+            <ProtectedRoute>
+              <Analysis />
+            </ProtectedRoute>
+
           }
         />
 
@@ -53,6 +57,13 @@ function App() {
           element={
             <ProtectedRoute>
               <SavedJobs />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/add-job"
+          element={
+            <ProtectedRoute>
+              <PostJob />
             </ProtectedRoute>
           }
         />

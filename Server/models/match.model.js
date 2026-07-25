@@ -11,10 +11,20 @@ const matchSchema = new mongoose.Schema(
       ref: "Resume",
       required: true,
     },
-    jobId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Job",
+    jobTitle: {
+      type: String,
       required: true,
+    },
+    company: {
+      type: String,
+    },
+    jobUrl: {
+      type: String,
+    },
+     source: {
+      type: String,
+      enum: ["internal", "external"],
+      default: "external",
     },
     matchScore: {
       type: Number,
@@ -23,6 +33,9 @@ const matchSchema = new mongoose.Schema(
     missingSkills: {
       type: [String],
       default: [],
+    },
+    reason: {
+      type: String,
     },
   },
   { timestamps: true },

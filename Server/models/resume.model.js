@@ -7,7 +7,7 @@ const resumeSchema = new mongoose.Schema(
     },
     file: {
       type: String,
-      required: true,
+      required: false,
     },
     extractedText: {
       type: String,

@@ -1,12 +1,13 @@
 import { useState } from "react";
 import API from "../services/api";
 import { useNavigate, Link } from "react-router-dom";
-import { User, Mail, Lock, Eye, EyeOff, Sparkles, ArrowRight, Loader2 } from "lucide-react";
+import { User, Mail, Lock, Eye, EyeOff, Sparkles, ArrowRight, Loader2, Briefcase, UserCheck } from "lucide-react";
 
 function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState("candidate"); // Default role set to candidate
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
@@ -27,7 +28,8 @@ function Register() {
     setLoading(true);
 
     try {
-      await API.post("/auth/register", { name, email, password });
+      // Role Payload ke saath API call
+      await API.post("/auth/register", { name, email, password, role });
       setSuccessMsg("Account created! Redirecting to sign in...");
       setTimeout(() => {
         navigate("/");
@@ -40,7 +42,7 @@ function Register() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-950 relative overflow-hidden px-4 font-sans">
+    <div className="min-h-screen flex items-center justify-center bg-slate-950 relative overflow-hidden px-4 font-sans py-12">
       {/* Background Glows */}
       <div className="absolute -top-40 -left-40 w-96 h-96 bg-indigo-600/30 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl pointer-events-none" />
@@ -49,7 +51,7 @@ function Register() {
       <div className="relative w-full max-w-md bg-slate-900/80 backdrop-blur-xl border border-slate-800 p-8 rounded-3xl shadow-2xl shadow-indigo-950/50">
         
         {/* Header */}
-        <div className="text-center mb-8">
+        <div className="text-center mb-6">
           <div className="inline-flex items-center justify-center p-3 bg-indigo-500/10 border border-indigo-500/20 rounded-2xl mb-4 text-indigo-400 shadow-inner">
             <Sparkles className="w-6 h-6" />
           </div>
@@ -57,7 +59,7 @@ function Register() {
             Create an Account
           </h2>
           <p className="text-sm text-slate-400">
-            Join us to analyze resumes and get AI job recommendations
+            Choose your account type to get started
           </p>
         </div>
 
@@ -75,6 +77,41 @@ function Register() {
 
         {/* Registration Form */}
         <form onSubmit={handleRegister} className="space-y-4">
+
+          {/* Role Selection Toggle */}
+          <div>
+            <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2 ml-1">
+              I want to:
+            </label>
+            <div className="grid grid-cols-2 gap-3">
+              <button
+                type="button"
+                onClick={() => setRole("candidate")}
+                className={`py-3 px-3 rounded-xl border text-xs font-medium transition-all flex items-center justify-center gap-2 cursor-pointer ${
+                  role === "candidate"
+                    ? "bg-indigo-600/20 border-indigo-500 text-indigo-300 shadow-lg shadow-indigo-500/10"
+                    : "bg-slate-950/60 border-slate-800 text-slate-400 hover:border-slate-700 hover:text-slate-200"
+                }`}
+              >
+                <UserCheck className="w-4 h-4" />
+                <span>Find Jobs</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setRole("recruiter")}
+                className={`py-3 px-3 rounded-xl border text-xs font-medium transition-all flex items-center justify-center gap-2 cursor-pointer ${
+                  role === "recruiter"
+                    ? "bg-indigo-600/20 border-indigo-500 text-indigo-300 shadow-lg shadow-indigo-500/10"
+                    : "bg-slate-950/60 border-slate-800 text-slate-400 hover:border-slate-700 hover:text-slate-200"
+                }`}
+              >
+                <Briefcase className="w-4 h-4" />
+                <span>Hire Talent</span>
+              </button>
+            </div>
+          </div>
+
           {/* Full Name */}
           <div>
             <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5 ml-1">
@@ -146,7 +183,7 @@ function Register() {
               </>
             ) : (
               <>
-                <span>Register</span>
+                <span>Register as {role === "candidate" ? "Candidate" : "Recruiter"}</span>
                 <ArrowRight className="w-4 h-4" />
               </>
             )}

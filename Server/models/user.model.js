@@ -13,6 +13,11 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    role: {
+      type: String,
+      enum: ["candidate", "recruiter"], // Sirf in dono me se ek role hoga
+      default: "candidate",
+    },
   },
   { timestamps: true },
 );

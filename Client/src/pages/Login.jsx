@@ -11,32 +11,25 @@ function Login() {
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setErrorMsg("");
+ const handleLogin = async (e) => {
+  e.preventDefault();
+  try {
+    const res = await API.post("/auth/login", { email, password });
+    
+    // Save Token and User Info in LocalStorage
+    localStorage.setItem("token", res.data.token);
+    localStorage.setItem("user", JSON.stringify(res.data.user)); // Make sure user object with role is saved
 
-    if (!email || !password) {
-      setErrorMsg("Please enter both email and password.");
-      return;
+    // Redirect based on role
+    if (res.data.user.role === "recruiter") {
+      navigate("/add-job"); // Recruiter direct Job Post page par jaye
+    } else {
+      navigate("/dashboard"); // Candidate candidate dashboard par jaye
     }
-
-    setLoading(true);
-
-    try {
-      const res = await API.post("/auth/login", {
-        email,
-        password,
-      });
-
-      localStorage.setItem("token", res.data.token);
-      navigate("/dashboard");
-    } catch (err) {
-      setErrorMsg(err.response?.data?.message || "Invalid credentials. Please try again.");
-      console.error("Login Error:", err.response?.data);
-    } finally {
-      setLoading(false);
-    }
-  };
+  } catch (err) {
+    setErrorMsg(err.response?.data?.message || "Login failed");
+  }
+};
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-950 relative overflow-hidden px-4 font-sans">

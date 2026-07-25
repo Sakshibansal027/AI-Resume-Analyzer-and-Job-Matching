@@ -19,7 +19,7 @@ const cleanJSON = (text) => {
 export const analyzeResume = async (resumeText) => {
   try {
     const model = genAI.getGenerativeModel({
-      model: "gemini-1.5-flash",
+      model: "gemini-2.5-flash",
       generationConfig: { responseMimeType: "application/json" },
     });
 
@@ -72,7 +72,7 @@ Resume:
 export const extractSkillsFromResume = async (resumeText) => {
   try {
     const model = genAI.getGenerativeModel({
-      model: "gemini-1.5-flash",
+      model: "gemini-2.5-flash",
       generationConfig: { responseMimeType: "application/json" },
     });
 
@@ -145,7 +145,7 @@ ${job.requiredSkills ? job.requiredSkills.join(", ") : job.tags || ""}
 export const getUserRoleFromAI = async (resumeText) => {
   try {
     const model = genAI.getGenerativeModel({
-      model: "gemini-1.5-flash",
+      model: "gemini-2.5-flash",
     });
 
     const result = await model.generateContent(`
