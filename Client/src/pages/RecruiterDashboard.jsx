@@ -27,14 +27,14 @@ function RecruiterDashboard() {
     const [editingJob, setEditingJob] = useState(null);
     const [actionLoading, setActionLoading] = useState(false);
     const [actionMessage, setActionMessage] = useState({ type: "", text: "" });
-    
+
     useEffect(() => {
         if (actionMessage.text) {
             const timer = setTimeout(() => {
                 setActionMessage({ type: "", text: "" });
-            }, 3000); 
+            }, 3000);
 
-            return () => clearTimeout(timer); 
+            return () => clearTimeout(timer);
         }
     }, [actionMessage]);
     const fetchJobs = () => {
@@ -122,8 +122,8 @@ function RecruiterDashboard() {
                 {actionMessage.text && (
                     <div
                         className={`mb-6 p-4 rounded-2xl flex items-center gap-3 text-sm border ${actionMessage.type === "success"
-                                ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-400"
-                                : "bg-rose-500/10 border-rose-500/30 text-rose-400"
+                            ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-400"
+                            : "bg-rose-500/10 border-rose-500/30 text-rose-400"
                             }`}
                     >
                         {actionMessage.type === "success" ? (

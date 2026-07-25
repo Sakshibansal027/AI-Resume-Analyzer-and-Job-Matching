@@ -1,7 +1,7 @@
 import { useState } from "react";
 import API from "../services/api.js";
 import { useNavigate, Link } from "react-router-dom";
-import { Mail, Lock, Eye, EyeOff, Sparkles, ArrowRight, Loader2 } from "lucide-react";
+import { Mail, Lock, Eye, EyeOff, Sparkles, ArrowRight, Loader2, AlertCircle } from "lucide-react";
 
 function Login() {
   const navigate = useNavigate();
@@ -10,15 +10,23 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+  const [notVerified, setNotVerified] = useState(false);
+  const [resending, setResending] = useState(false);
+  const [resendMsg, setResendMsg] = useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setErrorMsg("");
+    setNotVerified(false);
+    setResendMsg("");
+    setLoading(true);
+
     try {
       const res = await API.post("/auth/login", { email, password });
 
       // Save Token and User Info in LocalStorage
       localStorage.setItem("token", res.data.token);
-      localStorage.setItem("user", JSON.stringify(res.data.user)); // Make sure user object with role is saved
+      localStorage.setItem("user", JSON.stringify(res.data.user));
 
       // Redirect based on role
       if (res.data.user.role === "recruiter") {
@@ -27,7 +35,25 @@ function Login() {
         navigate("/dashboard");
       }
     } catch (err) {
+      if (err.response?.data?.notVerified) {
+        setNotVerified(true);
+      }
       setErrorMsg(err.response?.data?.message || "Login failed");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleResendVerification = async () => {
+    setResendMsg("");
+    setResending(true);
+    try {
+      const res = await API.post("/auth/resend-verification", { email });
+      setResendMsg(res.data.message || "Verification email sent.");
+    } catch (err) {
+      setResendMsg(err.response?.data?.message || "Could not resend verification email.");
+    } finally {
+      setResending(false);
     }
   };
 
@@ -55,8 +81,26 @@ function Login() {
 
         {/* Error Feedback */}
         {errorMsg && (
-          <div className="mb-5 p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm text-center font-medium animate-fade-in">
-            {errorMsg}
+          <div className="mb-3 p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm text-center font-medium flex items-start gap-2">
+            <AlertCircle className="w-4 h-4 mt-0.5 shrink-0" />
+            <span>{errorMsg}</span>
+          </div>
+        )}
+
+        {/* Resend Verification Option */}
+        {notVerified && (
+          <div className="mb-5 p-3 rounded-xl bg-slate-950/60 border border-slate-800 text-center">
+            <button
+              type="button"
+              onClick={handleResendVerification}
+              disabled={resending}
+              className="text-indigo-400 hover:text-indigo-300 text-xs font-semibold underline-offset-4 hover:underline disabled:opacity-50 cursor-pointer"
+            >
+              {resending ? "Resending..." : "Resend verification email"}
+            </button>
+            {resendMsg && (
+              <p className="text-xs text-slate-400 mt-2">{resendMsg}</p>
+            )}
           </div>
         )}
 
@@ -85,6 +129,12 @@ function Login() {
               <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider">
                 Password
               </label>
+              <Link
+                to="/forgot-password"
+                className="text-xs text-indigo-400 hover:text-indigo-300 font-medium transition-colors"
+              >
+                Forgot password?
+              </Link>
             </div>
             <div className="relative">
               <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
@@ -127,7 +177,7 @@ function Login() {
 
         {/* Register Footer Link */}
         <p className="text-center text-xs text-slate-400 mt-6">
-          Don’t have an account?{" "}
+          Don't have an account?{" "}
           <Link
             to="/register"
             className="text-indigo-400 hover:text-indigo-300 font-semibold transition-colors underline-offset-4 hover:underline"

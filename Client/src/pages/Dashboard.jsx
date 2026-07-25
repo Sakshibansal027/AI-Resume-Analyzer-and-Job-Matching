@@ -32,7 +32,7 @@ function Dashboard() {
             <Sparkles className="w-3.5 h-3.5" /> AI-Powered Career Assistant
           </div>
           <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight text-white mb-3">
-            Welcome back to your <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400">Career Hub</span> 🎉
+            Welcome back to your <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400">Career Hub</span>
           </h1>
           <p className="text-slate-400 max-w-2xl text-sm md:text-base">
             Optimize your resume with our AI parser, extract missing key skills, and discover high-matching job opportunities.

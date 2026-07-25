@@ -9,12 +9,18 @@ import Analysis from "./pages/Analysis";
 import SavedJobs from "./pages/SavedJobs";
 import PostJob from "./pages/PostJob";
 import RecruiterDashboard from "./pages/RecruiterDashboard";
+import VerifyEmail from "./pages/VerifyEmail";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/verify-email/:token" element={<VerifyEmail />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
 
         <Route
           path="/dashboard"
@@ -68,13 +74,13 @@ function App() {
             </ProtectedRoute>
           }
         />
-      <Route path="/recruiter-dashboard"
-  element={
-    <ProtectedRoute>
-      <RecruiterDashboard />
-    </ProtectedRoute>
-  }
-/>
+        <Route path="/recruiter-dashboard"
+          element={
+            <ProtectedRoute>
+              <RecruiterDashboard />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

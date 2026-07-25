@@ -6,8 +6,8 @@ const userSchema = new mongoose.Schema(
     },
     email: {
       type: String,
-      required:true,
-      unique:true
+      required: true,
+      unique: true,
     },
     password: {
       type: String,
@@ -15,8 +15,24 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ["candidate", "recruiter"], // Sirf in dono me se ek role hoga
+      enum: ["candidate", "recruiter"],
       default: "candidate",
+    },
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
+    verificationToken: {
+      type: String,
+    },
+    verificationTokenExpiry: {
+      type: Date,
+    },
+    resetPasswordToken: {
+      type: String,
+    },
+    resetPasswordExpiry: {
+      type: Date,
     },
   },
   { timestamps: true },
