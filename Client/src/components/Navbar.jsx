@@ -7,7 +7,8 @@ import {
   Bookmark,
   FilePlus2,
   LayoutDashboard,
-  LogOut
+  LogOut,
+  House
 } from "lucide-react";
 
 function Navbar() {
@@ -71,6 +72,19 @@ function Navbar() {
             </>
           ) : (
             <>
+
+              <Link
+                to="/dashboard"
+                className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl transition-all ${isActive("/dashboard")
+                  ? "bg-indigo-500/15 text-indigo-400 border border-indigo-500/30"
+                  : "text-slate-300 hover:text-white hover:bg-slate-900"
+                  }`}
+              >
+                <House className="w-4 h-4" />
+                <span>Home</span>
+              </Link>
+
+
               <Link
                 to="/upload"
                 className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl transition-all ${isActive("/upload")
