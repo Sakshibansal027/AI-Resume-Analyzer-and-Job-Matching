@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
 import API from "../services/api.js";
 import { Sparkles, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
@@ -7,8 +7,12 @@ function VerifyEmail() {
   const { token } = useParams();
   const [status, setStatus] = useState("loading"); // loading | success | error
   const [message, setMessage] = useState("");
+  const hasVerified = useRef(false);
 
   useEffect(() => {
+    if (hasVerified.current) return;
+    hasVerified.current = true;
+
     API.get(`/auth/verify-email/${token}`)
       .then((res) => {
         setStatus("success");

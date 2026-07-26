@@ -30,7 +30,7 @@ function Register() {
     try {
       // Role Payload ke saath API call
       await API.post("/auth/register", { name, email, password, role });
-      setSuccessMsg("Account created! Redirecting to sign in...");
+      setSuccessMsg("Almost done! Please check your email to verify your account, then sign in.");
       setTimeout(() => {
         navigate("/");
       }, 1500);
@@ -49,7 +49,7 @@ function Register() {
 
       {/* Main Form Card */}
       <div className="relative w-full max-w-md bg-slate-900/80 backdrop-blur-xl border border-slate-800 p-8 rounded-3xl shadow-2xl shadow-indigo-950/50">
-        
+
         {/* Header */}
         <div className="text-center mb-6">
           <div className="inline-flex items-center justify-center p-3 bg-indigo-500/10 border border-indigo-500/20 rounded-2xl mb-4 text-indigo-400 shadow-inner">
@@ -87,11 +87,10 @@ function Register() {
               <button
                 type="button"
                 onClick={() => setRole("candidate")}
-                className={`py-3 px-3 rounded-xl border text-xs font-medium transition-all flex items-center justify-center gap-2 cursor-pointer ${
-                  role === "candidate"
+                className={`py-3 px-3 rounded-xl border text-xs font-medium transition-all flex items-center justify-center gap-2 cursor-pointer ${role === "candidate"
                     ? "bg-indigo-600/20 border-indigo-500 text-indigo-300 shadow-lg shadow-indigo-500/10"
                     : "bg-slate-950/60 border-slate-800 text-slate-400 hover:border-slate-700 hover:text-slate-200"
-                }`}
+                  }`}
               >
                 <UserCheck className="w-4 h-4" />
                 <span>Find Jobs</span>
@@ -100,11 +99,10 @@ function Register() {
               <button
                 type="button"
                 onClick={() => setRole("recruiter")}
-                className={`py-3 px-3 rounded-xl border text-xs font-medium transition-all flex items-center justify-center gap-2 cursor-pointer ${
-                  role === "recruiter"
+                className={`py-3 px-3 rounded-xl border text-xs font-medium transition-all flex items-center justify-center gap-2 cursor-pointer ${role === "recruiter"
                     ? "bg-indigo-600/20 border-indigo-500 text-indigo-300 shadow-lg shadow-indigo-500/10"
                     : "bg-slate-950/60 border-slate-800 text-slate-400 hover:border-slate-700 hover:text-slate-200"
-                }`}
+                  }`}
               >
                 <Briefcase className="w-4 h-4" />
                 <span>Hire Talent</span>

@@ -7,7 +7,8 @@ export const saveJob = async (req, res) => {
 
     const alreadySaved = await SavedJob.findOne({
       userId,
-      applyLink,
+      jobTitle,
+      company,
     });
 
     if (alreadySaved) {
@@ -32,7 +33,6 @@ export const saveJob = async (req, res) => {
   }
 };
 
-
 export const getSavedJobs = async (req, res) => {
   try {
     const userId = req.user.userId;
@@ -46,7 +46,6 @@ export const getSavedJobs = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
-
 
 export const deleteSavedJob = async (req, res) => {
   try {
